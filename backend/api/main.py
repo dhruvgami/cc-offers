@@ -63,11 +63,12 @@ async def root():
     }
 
 
-# Import and include routers (we'll create these next)
-from api.routes import search, results
+# Import and include routers
+from api.routes import search, results, mock
 
 app.include_router(search.router, prefix="/api", tags=["search"])
 app.include_router(results.router, prefix="/api", tags=["results"])
+app.include_router(mock.router, prefix="/api", tags=["mock"])
 
 
 if __name__ == "__main__":

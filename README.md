@@ -55,18 +55,28 @@ python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 
 ### Frontend Setup
 
-1. Install dependencies:
+**Quick Start (Recommended):**
+```bash
+cd frontend
+./run.sh
+```
+
+The `run.sh` script will automatically:
+- Install dependencies if needed
+- Start the Vite development server
+
+**Manual Setup:**
 ```bash
 cd frontend
 npm install
-```
-
-2. Run development server:
-```bash
 npm run dev
 ```
 
-3. Open browser: http://localhost:5173
+**Access the Frontend:**
+- **App:** http://localhost:5173
+- **Backend API:** http://localhost:8000 (must be running)
+
+**Note:** node_modules is not committed to Git. Run `./run.sh` to install automatically.
 
 ## Technology Stack
 
