@@ -28,28 +28,30 @@ cc-offers/
 
 ### Backend Setup
 
-1. Create virtual environment:
+**Quick Start (Recommended):**
 ```bash
 cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+./run.sh
 ```
 
-2. Install dependencies:
+The `run.sh` script will automatically:
+- Create virtual environment if needed
+- Install all dependencies
+- Install Playwright browser
+- Initialize database with sample data
+- Start the FastAPI server on http://localhost:8000
+
+**Manual Setup:**
 ```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 playwright install chromium
+python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-3. Run backend server:
-```bash
-uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-4. Run Celery worker (in separate terminal):
-```bash
-celery -A shared.tasks worker --loglevel=info
-```
+**Note:** The venv directory is not committed to Git. Run `./run.sh` to set it up automatically.
 
 ### Frontend Setup
 
