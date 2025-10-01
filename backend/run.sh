@@ -15,23 +15,23 @@ if [ ! -d "venv" ]; then
     echo ""
 fi
 
-# Activate virtual environment
-echo "🔧 Activating virtual environment..."
-source venv/bin/activate
+# Define Python paths (use venv if activated, otherwise use venv's python directly)
+PYTHON="./venv/bin/python3"
+PIP="./venv/bin/pip"
 
 # Check if dependencies are installed
-if ! python -c "import fastapi" 2>/dev/null; then
+if ! $PYTHON -c "import fastapi" 2>/dev/null; then
     echo "📥 Installing dependencies..."
-    pip install --upgrade pip -q
-    pip install -r requirements.txt -q
+    $PIP install --upgrade pip -q
+    $PIP install -r requirements.txt -q
     echo "✅ Dependencies installed"
     echo ""
 fi
 
 # Check if Playwright browser is installed
-if ! python -c "from playwright.sync_api import sync_playwright; sync_playwright().start().chromium.executable_path" 2>/dev/null; then
+if ! $PYTHON -c "from playwright.sync_api import sync_playwright; sync_playwright().start().chromium.executable_path" 2>/dev/null; then
     echo "🌐 Installing Playwright browser..."
-    playwright install chromium
+    $PYTHON -m playwright install chromium
     echo "✅ Playwright browser installed"
     echo ""
 fi
@@ -39,7 +39,7 @@ fi
 # Initialize database if needed
 if [ ! -f "../data/travel_discounts.db" ]; then
     echo "🗄️  Initializing database..."
-    python -c "import sys; sys.path.insert(0, '.'); from shared.init_db import *; init_db(); seed_initial_data()"
+    $PYTHON -c "import sys; sys.path.insert(0, '.'); from shared.init_db import *; init_db(); seed_initial_data()"
     echo ""
 fi
 
@@ -52,4 +52,4 @@ echo ""
 echo "Press CTRL+C to stop"
 echo ""
 
-python -m uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+$PYTHON -m uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
